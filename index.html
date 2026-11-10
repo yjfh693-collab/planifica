@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planifica La Paz | Simulador financiero GCP</title>
+<style>
+:root{--bg:#f4f7f6;--panel:#fff;--ink:#172b27;--muted:#64736e;--green:#176b4d;--green2:#0f513b;--mint:#e6f3ed;--line:#dce6e1;--gold:#d59a32;--red:#b54747;--blue:#315f91;--shadow:0 8px 26px rgba(19,55,42,.07)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:linear-gradient(120deg,#103f31,#176b4d 65%,#25815f);color:white;padding:30px max(22px,calc((100% - 1180px)/2)) 26px}
+.top{display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap}.brand{font-weight:800;letter-spacing:.08em;font-size:13px;opacity:.9}.tag{border:1px solid #ffffff55;border-radius:30px;padding:6px 12px;font-size:12px}
+h1{font-size:clamp(28px,4vw,44px);line-height:1.12;margin:28px 0 12px;max-width:800px}.lead{max-width:760px;color:#e1eee8;font-size:16px}.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.meta span{background:#ffffff18;border:1px solid #ffffff35;padding:7px 11px;border-radius:8px;font-size:12px}
+nav{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);display:flex;gap:5px;overflow-x:auto;padding:8px max(16px,calc((100% - 1180px)/2));box-shadow:0 3px 10px #102b1d0a}
+nav a{white-space:nowrap;text-decoration:none;color:var(--muted);font-weight:650;font-size:13px;padding:9px 12px;border-radius:8px}nav a:hover{background:var(--mint);color:var(--green)}
+main{max-width:1180px;margin:28px auto;padding:0 20px 70px}.section{margin:28px 0;scroll-margin-top:78px}.eyebrow{color:var(--green);font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}h2{font-size:25px;margin:5px 0 12px}h3{font-size:17px;margin:0 0 10px}.sub{color:var(--muted);max-width:850px;margin:0 0 18px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:15px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);min-width:0}.span12{grid-column:span 12}.span8{grid-column:span 8}.span7{grid-column:span 7}.span6{grid-column:span 6}.span5{grid-column:span 5}.span4{grid-column:span 4}.kpi{font-size:27px;font-weight:800;letter-spacing:-.04em}.muted{color:var(--muted)}.small{font-size:12px}.pill{display:inline-block;background:var(--mint);color:var(--green2);font-size:11px;font-weight:750;border-radius:30px;padding:4px 9px}.callout{border-left:4px solid var(--green);background:#edf6f1;padding:13px 15px;border-radius:0 9px 9px 0;color:#25483a}.warning{border-left-color:var(--gold);background:#fff7e8}.danger{border-left-color:var(--red);background:#fff0f0}
+button,.btn{border:0;border-radius:9px;background:var(--green);color:white;padding:10px 14px;font-weight:700;cursor:pointer;font-size:13px}button:hover,.btn:hover{background:var(--green2)}button.secondary{background:#edf3ef;color:var(--green2);border:1px solid var(--line)}button.secondary:hover{background:#dcebe2}button.ghost{background:transparent;color:var(--green);border:1px solid var(--green)}button:disabled{opacity:.5;cursor:not-allowed}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.scenario-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.scenario{border:1px solid var(--line);border-radius:11px;padding:13px;background:#fff;text-align:left;color:var(--ink)}.scenario strong{display:block;font-size:14px}.scenario span{display:block;color:var(--muted);font-size:12px;margin-top:4px}.scenario.active{border:2px solid var(--green);background:#f0f8f3}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em}td.num{text-align:right;font-variant-numeric:tabular-nums}
+input,select{font:inherit;border:1px solid #cbd8d1;border-radius:7px;padding:8px 9px;color:var(--ink);background:white;max-width:100%}input[type=number]{width:100%;min-width:62px;text-align:right}.matrix-wrap{overflow-x:auto}.matrix{min-width:530px}.matrix td{padding:4px}.matrix input{width:100%;min-width:58px}.matrix th{text-align:center}.vector{max-width:170px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{background:#f7faf8;border:1px solid var(--line);border-radius:10px;padding:12px}.metric .kpi{font-size:22px}.metric label{font-size:11px;color:var(--muted)}
+.status{font-weight:750}.ok{color:var(--green)}.bad{color:var(--red)}.chart{width:100%;height:230px;display:block}.barrow{display:grid;grid-template-columns:145px 1fr 90px;gap:10px;align-items:center;margin:12px 0;font-size:12px}.track{height:12px;background:#e8efeb;border-radius:20px;overflow:hidden}.fill{height:100%;background:var(--green);border-radius:20px}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px}.formula{background:#f6f8f7;border:1px solid var(--line);padding:12px;border-radius:9px;overflow-x:auto}.step{display:flex;gap:12px;margin:12px 0}.numstep{background:var(--mint);color:var(--green);font-weight:800;border-radius:50%;width:27px;height:27px;display:grid;place-items:center;flex:none}
+footer{background:#123d30;color:#dcebe4;padding:25px max(20px,calc((100% - 1180px)/2));font-size:12px}
+details{border-bottom:1px solid var(--line);padding:11px 0}summary{cursor:pointer;font-weight:700}.qa-pass{color:var(--green);font-weight:800}.qa-fail{color:var(--red);font-weight:800}
+@media(max-width:800px){.span8,.span7,.span6,.span5,.span4{grid-column:span 12}.metrics{grid-template-columns:repeat(2,1fr)}.scenario-row{grid-template-columns:1fr}.barrow{grid-template-columns:105px 1fr 75px}}
+@media(max-width:480px){main{padding:0 12px 45px}.card{padding:14px}.metrics{grid-template-columns:1fr 1fr}.kpi{font-size:22px}header{padding:22px 18px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="top"><div class="brand">UMSA · MÉTODOS NUMÉRICOS</div><div class="tag">PROYECTO ACADÉMICO · INGENIERÍA DE SISTEMAS</div></div>
+ <h1>Planifica La Paz</h1>
+ <p class="lead">Simulador de planificación financiera municipal mediante Gradientes Conjugados Precondicionados. Analiza cómo distribuir recursos entre cuatro servicios urbanos y compara el comportamiento numérico en tres escenarios.</p>
+ <div class="meta"><span>Contexto: La Paz, Bolivia</span><span>Moneda: bolivianos (Bs)</span><span>Sistema: 4 × 4</span><span>Tolerancia: 10⁻⁶</span></div>
+</header>
+<nav>
+<a href="#inicio">Inicio</a><a href="#caso">Caso de estudio</a><a href="#modelo">Modelo</a><a href="#datos">Datos y escenarios</a><a href="#metodos">Métodos</a><a href="#resultados">Resultados</a><a href="#qa">Pruebas QA</a><a href="#conclusiones">Conclusiones</a>
+</nav>
+<main>
+<section class="section" id="inicio">
+ <div class="eyebrow">01 · Inicio</div><h2>¿Qué resuelve esta herramienta?</h2>
+ <p class="sub">Apoya la planificación de recursos de cuatro unidades municipales. El sistema lineal representa relaciones de coordinación entre áreas y necesidades presupuestarias ponderadas. Los valores iniciales son hipotéticos y sirven para fines didácticos; no representan el presupuesto oficial del Gobierno Autónomo Municipal de La Paz.</p>
+ <div class="grid">
+  <div class="card span4"><div class="pill">PROBLEMA</div><h3 style="margin-top:10px">Distribución coordinada</h3><p class="muted small">Estimar niveles de asignación para vialidad, alumbrado, residuos y áreas verdes considerando interdependencias operativas.</p></div>
+  <div class="card span4"><div class="pill">MÉTODO</div><h3 style="margin-top:10px">GCP con Jacobi</h3><p class="muted small">Resolver Ax = b con un precondicionador diagonal y contrastar con Gradientes Conjugados sin precondicionar.</p></div>
+  <div class="card span4"><div class="pill">EVALUACIÓN</div><h3 style="margin-top:10px">Precisión y convergencia</h3><p class="muted small">Comparar solución de referencia, errores por variable, residuo, iteraciones y número de condición.</p></div>
+ </div>
+</section>
+
+<section class="section" id="caso">
+ <div class="eyebrow">02 · Caso de estudio</div><h2>Planificación de cuatro servicios municipales</h2>
+ <p class="sub">En una ciudad como La Paz, las unidades operativas requieren coordinar recursos para mantener servicios básicos. Una modificación en una unidad puede afectar las necesidades de otras: por ejemplo, la intervención vial puede coordinarse con alumbrado o con la recolección de residuos.</p>
+ <div class="grid">
+  <div class="card span6"><h3>Variables de decisión</h3><table><tr><th>Variable</th><th>Unidad municipal</th><th>Unidad</th></tr><tr><td><b>x₁</b></td><td>Mantenimiento vial</td><td>miles de Bs</td></tr><tr><td><b>x₂</b></td><td>Alumbrado público</td><td>miles de Bs</td></tr><tr><td><b>x₃</b></td><td>Residuos sólidos</td><td>miles de Bs</td></tr><tr><td><b>x₄</b></td><td>Áreas verdes</td><td>miles de Bs</td></tr></table></div>
+  <div class="card span6"><h3>Supuestos financieros</h3><ul class="muted small"><li>El horizonte de análisis es un periodo presupuestario hipotético.</li><li>Los resultados x se interpretan como niveles de asignación en miles de bolivianos.</li><li>La matriz A contiene pesos de interacción y sensibilidad entre unidades; sus coeficientes no son tasas oficiales.</li><li>El vector b representa necesidades ponderadas de planificación.</li><li>La solución matemática debe interpretarse junto con criterios administrativos y restricciones reales.</li></ul></div>
+ </div>
+ <div class="callout" style="margin-top:15px"><b>Justificación:</b> el modelo permite estudiar cómo la coordinación entre unidades modifica una distribución presupuestaria. Es una simplificación académica: un presupuesto real también requiere límites legales, ingresos disponibles, contratos, prioridades sociales y restricciones de no negatividad.</div>
+</section>
+
+<section class="section" id="modelo">
+ <div class="eyebrow">03 · Formulación matemática</div><h2>Sistema lineal Ax = b</h2>
+ <p class="sub">El modelo usa cuatro ecuaciones y cuatro incógnitas. Cada coeficiente aᵢⱼ expresa el peso de la relación entre la unidad i y la variable de asignación j dentro del modelo normalizado.</p>
+ <div class="card">
+  <div class="formula mono">A · x = b &nbsp;&nbsp; con &nbsp; A = Aᵀ &nbsp; y &nbsp; xᵀAx &gt; 0 para todo x ≠ 0</div>
+  <p class="small muted">La simetría representa una interacción recíproca entre pares de unidades. La definición positiva garantiza una energía cuadrática positiva y es una condición necesaria para aplicar GC/GCP en este problema.</p>
+  <h3>Interpretación de coeficientes</h3>
+  <p class="muted small">Los elementos diagonales aᵢᵢ representan la respuesta propia de cada unidad; los elementos fuera de la diagonal aᵢⱼ = aⱼᵢ representan el acoplamiento entre dos unidades. Los términos bᵢ recogen la presión o necesidad ponderada de cada servicio. No deben leerse como montos presupuestarios directos.</p>
+ </div>
+</section>
+
+<section class="section" id="datos">
+ <div class="eyebrow">04 · Entrada de datos</div><h2>Editar matriz, vector y escenario</h2>
+ <p class="sub">Carga un escenario de ejemplo o modifica A y b. Al ejecutar, la página valida la matriz, calcula la solución directa, GC, GCP y sus indicadores.</p>
+ <div class="card">
+  <h3>Escenarios obligatorios</h3>
+  <div class="scenario-row">
+   <button class="scenario active" data-scenario="ideal"><strong>1. Ideal</strong><span>Condiciones estables y matriz bien condicionada.</span></button>
+   <button class="scenario" data-scenario="stress"><strong>2. Bajo estrés</strong><span>Presión inflacionaria y reducción de ingresos simuladas.</span></button>
+   <button class="scenario" data-scenario="ill"><strong>3. Mal condicionado</strong><span>Escalamiento diagonal desigual; se aplica Jacobi.</span></button>
+  </div>
+  <div class="actions"><button id="runBtn">Ejecutar cálculos</button><button class="secondary" id="resetBtn">Restaurar escenario</button><button class="secondary" id="downloadBtn">Descargar resultados CSV</button></div>
+  <div id="validation" class="callout small">Selecciona un escenario y ejecuta el cálculo para ver el diagnóstico.</div>
+  <div class="grid" style="margin-top:15px">
+   <div class="span8"><h3>Matriz A (4 × 4)</h3><div class="matrix-wrap"><table class="matrix" id="matrixTable"></table></div></div>
+   <div class="span4"><h3>Vector b</h3><div id="vectorInputs"></div><p class="small muted">b se expresa en unidades ponderadas del modelo.</p><label class="small muted">Tolerancia relativa</label><input id="tol" type="number" step="any" value="0.000001" style="width:100%"><label class="small muted" style="display:block;margin-top:8px">Máximo de iteraciones</label><input id="maxIter" type="number" min="1" max="10000" value="100" style="width:100%"><label class="small muted" style="display:block;margin-top:8px">Vector inicial x₀</label><select id="x0" style="width:100%"><option value="zero">Vector cero</option><option value="one">Vector de unos</option></select><label class="small muted" style="display:block;margin-top:8px">Precondicionador GCP</label><select id="preconditioner" style="width:100%"><option value="jacobi">Jacobi (diagonal)</option></select></div>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="metodos">
+ <div class="eyebrow">05 · Métodos numéricos</div><h2>¿Qué hace cada algoritmo?</h2>
+ <div class="grid">
+  <div class="card span4"><h3>Solución de referencia</h3><p class="muted small">Se utiliza eliminación de Gauss con pivoteo parcial. Para este sistema pequeño permite obtener una solución de referencia independiente de los métodos iterativos.</p><div class="formula mono">Ax = b → x<sub>ref</sub></div></div>
+  <div class="card span4"><h3>Gradientes Conjugados (GC)</h3><p class="muted small">Parte de x₀, calcula el residuo r = b − Ax y construye direcciones conjugadas. Actualiza x hasta alcanzar la tolerancia relativa.</p><div class="formula mono">αₖ = (rₖᵀrₖ)/(pₖᵀApₖ)</div></div>
+  <div class="card span4"><h3>GCP con Jacobi</h3><p class="muted small">Resuelve Mzₖ = rₖ con M = diag(A). Las direcciones se construyen usando zₖ, buscando mejorar la convergencia cuando existe mal escalamiento diagonal.</p><div class="formula mono">M = diag(a₁₁, …, aₙₙ)</div></div>
+ </div>
+ <div class="card" style="margin-top:15px"><h3>Secuencia del algoritmo GCP</h3>
+  <div class="step"><div class="numstep">1</div><div><b>Inicialización:</b> elegir x₀ y calcular r₀ = b − Ax₀.</div></div>
+  <div class="step"><div class="numstep">2</div><div><b>Precondicionar:</b> resolver Mzₖ = rₖ. Para Jacobi, zᵢ = rᵢ/aᵢᵢ.</div></div>
+  <div class="step"><div class="numstep">3</div><div><b>Dirección:</b> p₀ = z₀; luego pₖ₊₁ = zₖ₊₁ + βₖpₖ.</div></div>
+  <div class="step"><div class="numstep">4</div><div><b>Tamaño de paso:</b> αₖ = (rₖᵀzₖ)/(pₖᵀApₖ).</div></div>
+  <div class="step"><div class="numstep">5</div><div><b>Actualizar:</b> xₖ₊₁ = xₖ + αₖpₖ y rₖ₊₁ = rₖ − αₖApₖ.</div></div>
+  <div class="step"><div class="numstep">6</div><div><b>Parada:</b> finalizar cuando ||rₖ||₂/||b||₂ &lt; tolerancia o se alcance Nmáx.</div></div>
+  <p class="small muted">En el GC simple se usa zₖ = rₖ. En ambos métodos se controla el residuo relativo. La implementación incluye protección ante divisiones inválidas y matrices no aptas.</p>
+ </div>
+</section>
+
+<section class="section" id="resultados">
+ <div class="eyebrow">06 · Resultados y comparación</div><h2>Diagnóstico del escenario activo</h2>
+ <p class="sub">Los indicadores se actualizan al ejecutar el cálculo. Los errores se calculan respecto a la solución directa de referencia.</p>
+ <div class="metrics">
+  <div class="metric"><label>Iteraciones GC</label><div class="kpi" id="gcIter">—</div><div class="small muted" id="gcStatus">Sin ejecutar</div></div>
+  <div class="metric"><label>Iteraciones GCP</label><div class="kpi" id="pcgIter">—</div><div class="small muted" id="pcgStatus">Sin ejecutar</div></div>
+  <div class="metric"><label>Condición κ(A)</label><div class="kpi" id="condA">—</div><div class="small muted">Norma 2 / autovalores</div></div>
+  <div class="metric"><label>Condición precond.</label><div class="kpi" id="condM">—</div><div class="small muted">M⁻¹A, valores propios equivalentes</div></div>
+ </div>
+ <div class="grid" style="margin-top:15px">
+  <div class="card span6"><h3>Soluciones por variable</h3><div id="solutions"></div></div>
+  <div class="card span6"><h3>Asignación estimada (miles de Bs)</h3><div id="bars"><p class="muted small">Ejecuta un escenario para visualizar los resultados.</p></div></div>
+  <div class="card span12"><h3>Tabla comparativa obligatoria</h3><div class="matrix-wrap"><table id="comparison"><thead><tr><th>Indicador</th><th>GC</th><th>GCP (Jacobi)</th></tr></thead><tbody><tr><td colspan="3" class="muted">Sin resultados todavía.</td></tr></tbody></table></div></div>
+  <div class="card span12"><h3>Errores por componente</h3><div class="matrix-wrap"><table id="errors"><thead><tr><th>Variable</th><th>Referencia</th><th>GCP</th><th>Error absoluto</th><th>Error relativo</th><th>Error porcentual</th></tr></thead><tbody><tr><td colspan="6" class="muted">Ejecuta un escenario para calcular errores.</td></tr></tbody></table></div></div>
+ </div>
+ <div id="interpretation" class="callout" style="margin-top:15px">La interpretación financiera aparecerá después de ejecutar un escenario.</div>
+</section>
+
+<section class="section" id="qa">
+ <div class="eyebrow">07 · Aseguramiento de calidad</div><h2>Módulo de pruebas (QA)</h2>
+ <p class="sub">Ejecuta pruebas funcionales mínimas requeridas en el desafío. Las pruebas se realizan localmente en el navegador y muestran entrada, resultado esperado, resultado obtenido y conclusión.</p>
+ <div class="card"><div class="actions"><button id="qaBtn">Ejecutar todas las pruebas QA</button></div><div class="matrix-wrap"><table id="qaTable"><thead><tr><th>Prueba</th><th>Entrada</th><th>Resultado esperado</th><th>Resultado obtenido</th><th>Conclusión</th></tr></thead><tbody><tr><td colspan="5" class="muted">Aún no se ejecutaron pruebas.</td></tr></tbody></table></div><p class="small muted">La prueba comparativa verifica el escenario mal condicionado de ejemplo. Si se editan los datos, la prueba QA vuelve a utilizar los valores predeterminados definidos para cada caso.</p></div>
+</section>
+
+<section class="section" id="conclusiones">
+ <div class="eyebrow">08 · Conclusiones y referencias</div><h2>Interpretación técnica y financiera</h2>
+ <div class="card">
+  <h3>Conclusiones del modelo</h3>
+  <ul class="muted"><li>Un sistema matricial permite representar de forma simplificada la coordinación entre unidades municipales.</li><li>El escenario ideal permite observar la convergencia en condiciones numéricas favorables.</li><li>El escenario de estrés modifica las necesidades ponderadas para representar presiones económicas; el cambio de solución debe interpretarse como una simulación.</li><li>El mal condicionamiento puede amplificar la sensibilidad de la solución ante perturbaciones. El precondicionador de Jacobi busca reducir el efecto del escalamiento diagonal desigual.</li><li>Una solución numérica no reemplaza la evaluación técnica, presupuestaria ni normativa de una entidad pública.</li></ul>
+  <h3>Limitaciones</h3><p class="muted small">Los datos y coeficientes son sintéticos. El modelo no incorpora ingresos municipales observados, ejecución presupuestaria, inflación oficial, deuda, restricciones de caja ni optimización con límites. Para un estudio aplicado se deben reemplazar los datos por fuentes verificables y validar el modelo con personal financiero.</p>
+  <h3>Referencias bibliográficas</h3>
+  <ol class="small muted"><li>Suñagua S., P. (2020). <i>Método de Gradientes Conjugados Precondicionado</i>. Revista Boliviana de Matemática – UMSA, 04, 2–7.</li><li>Golub, G. H., &amp; Van Loan, C. F. (2013). <i>Matrix Computations</i> (4th ed.). Johns Hopkins University Press.</li><li>Saad, Y. (2003). <i>Iterative Methods for Sparse Linear Systems</i> (2nd ed.). SIAM.</li></ol>
+ </div>
+</section>
+</main>
+<footer><b>Planifica La Paz</b> · Proyecto académico de Métodos Numéricos · Ingeniería de Sistemas · UMSA<br>Simulación educativa con datos hipotéticos. No constituye información ni recomendación presupuestaria oficial.</footer>
+
+<script>
+const names=['Mantenimiento vial','Alumbrado público','Residuos sólidos','Áreas verdes'];
+const scenarios={
+ ideal:{name:'Ideal',A:[[4,-1,0,0],[-1,4,-1,0],[0,-1,4,-1],[0,0,-1,3]],b:[12,10,9,7]},
+ stress:{name:'Bajo estrés',A:[[4.4,-1.1,0,0],[-1.1,4.2,-1.05,0],[0,-1.05,4.3,-1.1],[0,0,-1.1,3.4]],b:[14.5,11.8,10.7,8.1]},
+ ill:{name:'Mal condicionado',A:[[10000,0,0,0],[0,4,0,0],[0,0,0.04,0],[0,0,0,0.0004]],b:[12000,4,0.036,0.00028]}
+};
+let active='ideal',lastResults=null;
+const $=id=>document.getElementById(id);
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function fmt(x,d=6){if(!Number.isFinite(x))return '—';return Number(x).toLocaleString('es-BO',{maximumFractionDigits:d,minimumFractionDigits:0})}
+function norm(v){return Math.sqrt(v.reduce((s,x)=>s+x*x,0))}
+function dot(a,b){return a.reduce((s,x,i)=>s+x*b[i],0)}
+function mv(A,x){return A.map(r=>dot(r,x))}
+function sub(a,b){return a.map((x,i)=>x-b[i])}
+function add(a,b){return a.map((x,i)=>x+b[i])}
+function scale(a,k){return a.map(x=>x*k)}
+function matSym(A){for(let i=0;i<A.length;i++)for(let j=0;j<A.length;j++)if(Math.abs(A[i][j]-A[j][i])>1e-10)return false;return true}
+function cholesky(A){let n=A.length,L=Array.from({length:n},()=>Array(n).fill(0));for(let i=0;i<n;i++)for(let j=0;j<=i;j++){let s=A[i][j];for(let k=0;k<j;k++)s-=L[i][k]*L[j][k];if(i===j){if(s<=1e-12||!Number.isFinite(s))return null;L[i][j]=Math.sqrt(s)}else L[i][j]=s/L[j][j]}return L}
+function gauss(A,b){let n=b.length,M=A.map((r,i)=>r.slice().concat(b[i]));for(let k=0;k<n;k++){let p=k;for(let i=k+1;i<n;i++)if(Math.abs(M[i][k])>Math.abs(M[p][k]))p=i;if(Math.abs(M[p][k])<1e-14)throw Error('Matriz singular');[M[k],M[p]]=[M[p],M[k]];for(let i=k+1;i<n;i++){let f=M[i][k]/M[k][k];for(let j=k;j<=n;j++)M[i][j]-=f*M[k][j]}}let x=Array(n).fill(0);for(let i=n-1;i>=0;i--){let s=M[i][n];for(let j=i+1;j<n;j++)s-=M[i][j]*x[j];x[i]=s/M[i][i]}return x}
+function eigenSym(A){let M=A.map(r=>r.slice()),n=M.length;for(let iter=0;iter<100*n*n;iter++){let p=0,q=1,max=0;for(let i=0;i<n;i++)for(let j=i+1;j<n;j++)if(Math.abs(M[i][j])>max){max=Math.abs(M[i][j]);p=i;q=j}if(max<1e-13)break;let phi=.5*Math.atan2(2*M[p][q],M[q][q]-M[p][p]),c=Math.cos(phi),s=Math.sin(phi);let app=c*c*M[p][p]-2*s*c*M[p][q]+s*s*M[q][q],aqq=s*s*M[p][p]+2*s*c*M[p][q]+c*c*M[q][q];for(let k=0;k<n;k++)if(k!==p&&k!==q){let mkp=M[k][p],mkq=M[k][q];M[k][p]=M[p][k]=c*mkp-s*mkq;M[k][q]=M[q][k]=s*mkp+c*mkq}M[p][p]=app;M[q][q]=aqq;M[p][q]=M[q][p]=0}return M.map((r,i)=>r[i])}
+function cond2(A){let e=eigenSym(A);let pos=e.filter(x=>x>1e-15);return pos.length===A.length?Math.max(...pos)/Math.min(...pos):Infinity}
+function cg(A,b,x0,tol,maxit,pre){let x=x0.slice(),r=sub(b,mv(A,x)),z=pre?r.map((v,i)=>v/A[i][i]):r.slice(),p=z.slice(),rz=dot(r,z),bn=norm(b)||1,rel=norm(r)/bn,it=0;while(rel>=tol&&it<maxit){let Ap=mv(A,p),den=dot(p,Ap);if(!(den>0)||!Number.isFinite(den))break;let alpha=rz/den;x=add(x,scale(p,alpha));r=sub(r,scale(Ap,alpha));rel=norm(r)/bn;it++;if(rel<tol)break;z=pre?r.map((v,i)=>v/A[i][i]):r.slice();let rz2=dot(r,z);if(!Number.isFinite(rz2)||Math.abs(rz)<1e-30)break;let beta=rz2/rz;p=add(z,scale(p,beta));rz=rz2}return {x,it,rel,converged:rel<tol}}
+function getData(){let A=Array.from({length:4},(_,i)=>Array.from({length:4},(_,j)=>Number($(`a${i}${j}`).value)));let b=Array.from({length:4},(_,i)=>Number($(`b${i}`).value));if(A.flat().concat(b).some(v=>!Number.isFinite(v)))throw Error('Todos los coeficientes deben ser números válidos.');return {A,b}}
+function renderInputs(data){let t='<thead><tr><th></th>'+[1,2,3,4].map(x=>`<th>x${x}</th>`).join('')+'</tr></thead><tbody>';data.A.forEach((r,i)=>{t+=`<tr><th>Fila ${i+1}</th>`+r.map((v,j)=>`<td><input type="number" step="any" id="a${i}${j}" value="${v}"></td>`).join('')+'</tr>'});$('matrixTable').innerHTML=t+'</tbody>';$('vectorInputs').innerHTML=data.b.map((v,i)=>`<label class="small muted" style="display:block;margin:5px 0">b${i+1} · ${names[i]}</label><input class="vector" type="number" step="any" id="b${i}" value="${v}" style="width:100%">`).join('')}
+function loadScenario(key){active=key;document.querySelectorAll('.scenario').forEach(b=>b.classList.toggle('active',b.dataset.scenario===key));renderInputs(clone(scenarios[key]));$('validation').className='callout small';$('validation').textContent=`Escenario ${scenarios[key].name} cargado. Ejecuta los cálculos para obtener resultados.`;lastResults=null}
+function validate(A){if(A.length!==4||A.some(r=>r.length!==4))throw Error('La matriz debe ser 4 × 4.');if(!matSym(A))throw Error('La matriz no es simétrica (A ≠ Aᵀ).');let L=cholesky(A);if(!L)throw Error('La matriz no es definida positiva. Verifica sus menores principales/autovalores.');return L}
+function execute(){try{let {A,b}=getData();validate(A);let tol=Number($('tol').value),maxit=Number($('maxIter').value);if(!(tol>0&&tol<1))throw Error('La tolerancia debe estar entre 0 y 1.');if(!(maxit>=1))throw Error('El máximo de iteraciones debe ser positivo.');let x0=$('x0').value==='one'?[1,1,1,1]:[0,0,0,0],ref=gauss(A,b),gc=cg(A,b,x0,tol,maxit,false),pcg=cg(A,b,x0,tol,maxit,true),D=A.map((r,i)=>r.map((v,j)=>v/Math.sqrt(A[i][i]*A[j][j]))),cA=cond2(A),cM=cond2(D),res=norm(sub(b,mv(A,pcg.x)))/(norm(b)||1);lastResults={A,b,ref,gc,pcg,cA,cM,res,scenario:scenarios[active].name};renderResults(lastResults);$('validation').className='callout small';$('validation').innerHTML=`<b>Validación correcta.</b> A es simétrica y definida positiva (factorización de Cholesky exitosa). Escenario: ${scenarios[active].name}.`; }catch(e){$('validation').className='callout danger small';$('validation').textContent='No se pudo ejecutar: '+e.message;}}
+function renderResults(r){$('gcIter').textContent=r.gc.it;$('pcgIter').textContent=r.pcg.it;$('gcStatus').innerHTML=r.gc.converged?'<span class="ok">Convergió</span>':'<span class="bad">No convergió</span>';$('pcgStatus').innerHTML=r.pcg.converged?'<span class="ok">Convergió</span>':'<span class="bad">No convergió</span>';$('condA').textContent=fmt(r.cA,3);$('condM').textContent=fmt(r.cM,3);
+ let rows='';for(let i=0;i<4;i++)rows+=`<tr><td>${names[i]}</td><td class="num">${fmt(r.ref[i],6)}</td><td class="num">${fmt(r.gc.x[i],6)}</td><td class="num">${fmt(r.pcg.x[i],6)}</td></tr>`;$('solutions').innerHTML=`<table><thead><tr><th>Unidad</th><th>Referencia</th><th>GC</th><th>GCP</th></tr></thead><tbody>${rows}</tbody></table>`;
+ let max=Math.max(...r.pcg.x.map(v=>Math.abs(v)),1);$('bars').innerHTML=r.pcg.x.map((v,i)=>`<div class="barrow"><span>${names[i]}</span><div class="track"><div class="fill" style="width:${Math.max(0,Math.abs(v)/max*100)}%"></div></div><b class="num">${fmt(v,3)} mil Bs</b></div>`).join('');
+ let err='';for(let i=0;i<4;i++){let ea=Math.abs(r.ref[i]-r.pcg.x[i]),er=Math.abs(r.ref[i])>1e-14?ea/Math.abs(r.ref[i]):NaN;err+=`<tr><td>x${i+1}</td><td class="num">${fmt(r.ref[i])}</td><td class="num">${fmt(r.pcg.x[i])}</td><td class="num">${fmt(ea,9)}</td><td class="num">${Number.isFinite(er)?fmt(er,9):'No definido'}</td><td class="num">${Number.isFinite(er)?fmt(er*100,7)+' %':'No definido'}</td></tr>`}$('errors').querySelector('tbody').innerHTML=err;
+ $('comparison').querySelector('tbody').innerHTML=`<tr><td>Solución aproximada</td><td class="num">${r.gc.x.map(v=>fmt(v,4)).join(', ')}</td><td class="num">${r.pcg.x.map(v=>fmt(v,4)).join(', ')}</td></tr><tr><td>Iteraciones</td><td class="num">${r.gc.it}</td><td class="num">${r.pcg.it}</td></tr><tr><td>Residuo relativo final</td><td class="num">${fmt(r.gc.rel,9)}</td><td class="num">${fmt(r.pcg.rel,9)}</td></tr><tr><td>¿Convergió?</td><td class="num">${r.gc.converged?'Sí':'No'}</td><td class="num">${r.pcg.converged?'Sí':'No'}</td></tr><tr><td>Número de condición κ(A)</td><td class="num">${fmt(r.cA,4)}</td><td class="num">${fmt(r.cA,4)}</td></tr><tr><td>Número de condición precondicionado</td><td class="num">—</td><td class="num">${fmt(r.cM,4)}</td></tr>`;
+ let note=r.scenario==='Mal condicionado'?'El escenario utiliza escalas diagonales muy diferentes. Jacobi normaliza esa escala y puede reducir el número de condición efectivo. Compara las iteraciones medidas; la mejora no debe suponerse, debe verificarse.':r.scenario==='Bajo estrés'?'El vector de necesidades y los coeficientes cambian para representar mayores presiones operativas. La solución estima cómo se redistribuyen los niveles de asignación dentro del modelo.':'La matriz está bien condicionada y representa una coordinación relativamente estable. GC y GCP deberían resolver el sistema con pocos pasos.';
+ $('interpretation').innerHTML=`<b>Interpretación del escenario ${r.scenario}:</b> ${note}<br><span class="small">El residuo relativo global de GCP es ${fmt(r.res,9)}. Los valores x se expresan en miles de Bs y son resultados matemáticos del modelo hipotético, no montos oficiales.</span>`}
+function runQA(){let out=[];function test(name,input,expected,fn){try{let result=fn();out.push({name,input,expected,got:result?'Correcto':'No se cumplió la condición',ok:!!result})}catch(e){out.push({name,input,expected,got:e.message,ok:false})}}
+ test('Carga de escenarios','Ideal, estrés y mal condicionado','Los tres sistemas son simétricos y definidos positivos',()=>Object.values(scenarios).every(s=>matSym(s.A)&&!!cholesky(s.A)));
+ test('Validación de matriz no válida','Matriz no simétrica (a₁₂ ≠ a₂₁)','El sistema rechaza la matriz y muestra una notificación',()=>{let A=clone(scenarios.ideal.A);A[0][1]+=1;try{validate(A);return false}catch(e){return e.message.includes('simétrica')}});
+ test('Edición dinámica','Cambiar b₁ en la matriz ideal','La solución directa cambia al modificar b',()=>{let s=scenarios.ideal,A=s.A,b=s.b.slice(),x1=gauss(A,b);b[0]+=1;let x2=gauss(A,b);return norm(sub(x1,x2))>1e-8});
+ test('Comparación de precondicionamiento','Escenario mal condicionado de ejemplo','GCP converge en menor o igual número de iteraciones que GC',()=>{let s=scenarios.ill,t=1e-6,x=[0,0,0,0],g=cg(s.A,s.b,x,t,100,false),p=cg(s.A,s.b,x,t,100,true);return p.converged&&g.converged&&p.it<=g.it});
+ $('qaTable').querySelector('tbody').innerHTML=out.map(o=>`<tr><td><b>${o.name}</b></td><td>${o.input}</td><td>${o.expected}</td><td>${o.got}</td><td class="${o.ok?'qa-pass':'qa-fail'}">${o.ok?'APROBADA':'REVISAR'}</td></tr>`).join('')}
+document.querySelectorAll('.scenario').forEach(b=>b.addEventListener('click',()=>loadScenario(b.dataset.scenario)));
+$('runBtn').addEventListener('click',execute);$('resetBtn').addEventListener('click',()=>loadScenario(active));$('qaBtn').addEventListener('click',runQA);
+$('downloadBtn').addEventListener('click',()=>{if(!lastResults){alert('Primero ejecuta un escenario.');return}let r=lastResults,lines=[['Indicador','GC','GCP'],['Iteraciones',r.gc.it,r.pcg.it],['Residuo relativo',r.gc.rel,r.pcg.rel],['Condicion A',r.cA,r.cA],['Condicion precondicionada','',r.cM],...names.map((n,i)=>[n,r.gc.x[i],r.pcg.x[i]])];let csv=lines.map(row=>row.join(';')).join('\n');let blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='resultados_planifica_la_paz.csv';a.click();URL.revokeObjectURL(a.href)});
+loadScenario('ideal');execute();
+</script>
+</body></html>
